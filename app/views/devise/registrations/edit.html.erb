@@ -1,0 +1,42 @@
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        アカウント編集
+      </h1>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <%= form_for @user do |f| %>
+          <div class="field">
+            <%= f.label :email, "メールアドレス", class: "label" %>
+            <%= f.email_field :email, :placeholder => "メールアドレスを入力してください", class: "input" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password, "変更後パスワード", class: "label" %>
+            <%= f.password_field :password, autocomplete: "new-password", :placeholder => "変更後パスワードを入力", class: "input" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password_confirmation, "確認用パスワード", class: "label" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", :placeholder => "変更後パスワードを入力", class: "input" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password, "現在のパスワード", class: "label" %>
+            <%= f.password_field :password, autocomplete: "now-password", :placeholder => "現在のパスワードを入力", class: "input" %>
+          </div>
+          
+          <%= link_to "キャンセル", @user, class: "button" %>
+          <%= f.submit "保存", class: "button is-success" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
