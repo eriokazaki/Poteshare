@@ -1,12 +1,4 @@
 class UsersController < ApplicationController
-    # before_action :default_avatar
-
-    # def default_avatar
-    #     if !self.avatar.attached?
-    #         self.avatar.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'no-image.png')), filename: 'no-image.png', content_type: 'image/png')
-    #     end
-    # end
-
     def new  
         @user = User.new
     end
@@ -28,6 +20,10 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         @user.update(user_params)
         redirect_to @user
+    end
+
+    def mypage
+        redirect_to accounts_show_path(current_user)
     end
 
     private

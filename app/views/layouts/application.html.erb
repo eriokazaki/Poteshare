@@ -41,7 +41,16 @@
             <div class="navbar-item">
               <div class="field is-grouped">
                 <p class="control">
-                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button is-warning is-light" %>
+                  <%= link_to "新規の施設登録", new_room_path, class: " button is-warning is-light" %>
+                </p>
+                <p class="control">
+                  <%= link_to "宿泊施設一覧", rooms_path, class: " button is-warning is-light" %>
+                </p>
+                <p class="control">
+                  <%= link_to "マイページ", user_path(current_user), class: "button is-warning is-light" %>
+                </p>
+                <p class="control">
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button is-warning is-light" %>
                 </p>
               </div>
             </div>
