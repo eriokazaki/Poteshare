@@ -7,6 +7,10 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
   end
 
+  def own
+    @rooms = current_user.rooms.all
+  end
+
   def new
     @room = Room.new
   end
@@ -28,6 +32,13 @@ class RoomsController < ApplicationController
     redirect_to room_path(@room)
   end
 
+  def destroy
+    @room = ROom.find(params[:id])
+    @room.destroy
+    flash[:notice] = "ホテルを削除しました"
+    redirect_to :rooms
+  end
+  
   private
   def room_params
     params.require(:room).permit(:name, :introduce, :single_rate, :address, :image_name)

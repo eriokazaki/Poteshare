@@ -1,0 +1,56 @@
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        アカウント
+      </h1>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="columns is-centered">
+        <div class="column is-3">
+        <article class="panel is-link">
+          <h2 class="panel-heading">
+            設定
+          </h2>
+          <div class="panel-block">
+            <p class="control">
+              アカウント
+            </p>
+          </div>
+            <%= link_to "プロフィール", users_profile_path, class: "panel-block"%>
+        </article>
+      </div>
+          <div class="column is-8">
+            <td>
+              <%= link_to "編集", edit_user_registration_path, class: "button is-primary" %>
+            </td>
+            <table class="table is-fullwidth">
+                <% if @user == current_user %>
+                  <tr>
+                    <td>メールアドレス</td>
+                    <td class="is-size-4">
+                    <%= @user.email %>
+                    </td>
+                  </tr>
+                </div>
+                  <tr>
+                    <td>パスワード</td>
+                    <td class="is-size-4">
+                    ******
+                    </td>
+                  </tr>
+                  
+                <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

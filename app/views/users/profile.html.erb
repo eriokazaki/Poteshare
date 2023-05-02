@@ -23,7 +23,7 @@
               プロフィール
             </p>
           </div>
-            <%= link_to "アカウント", "/users/account", class: "panel-block"%>
+            <%= link_to "アカウント", users_account_path, class: "panel-block"%>
         </article>
       </div>
           <div class="column is-4">
@@ -54,21 +54,7 @@
               </tr>
               
                 <% if @user == current_user %>
-                  <tr>
-                    <td>メールアドレス</td>
-                    <td class="is-size-4">
-                    <%= @user.email %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>パスワード</td>
-                    <td class="is-size-4">
-                    ******
-                    </td>
-                  </tr>
-                  <td>
-                    <%= link_to "編集", edit_user_path(@user), class: "button is-primary" %>
-                  </td>
+                    <%= link_to "編集", users_edit_path(@user), class: "button is-primary" %>
                 <% end %>
             </table>
           </div>
@@ -77,4 +63,3 @@
     </div>
   </div>
 </section>
-      

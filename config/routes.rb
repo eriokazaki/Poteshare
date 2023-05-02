@@ -1,9 +1,26 @@
 Rails.application.routes.draw do
-  get 'accounts/show'
-  devise_for :users
-  root to: "home#index"
-  resources :users
+  get 'users/account'
+  get 'users/profile'
+
+  get 'rooms/own'
+  
+  
+  get 'users/create'
+  get 'users/new'
+  get 'users/edit'
+  get 'users/update'
+  
+  resources :reservations do
+    member do
+      post 'confirm' => 'reservations#confirm'
+      post 'back'
+    end
+  end
+
+  root to: 'home#index'
+
   resources :rooms
-  get 'users/account', to: 'account#show'
-  get 'users/account/edit', to: 'devise/registrations#edit'
+  devise_for :users
+  resources :users
+
 end

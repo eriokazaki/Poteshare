@@ -1,29 +1,29 @@
 class UsersController < ApplicationController
+    def account
+        @user = User.find(current_user.id)
+    end
+
+    def profile
+         @user = User.find(current_user.id)
+    end
+
     def new  
         @user = User.new
     end
 
     def create 
         @user = User.create params.require(:user).permit(:username, :profile, :avatar, :email, :password)
-        redirect_to @user
+        redirect_to "users_profile_path"
     end
-
-    def show
-        @user = User.find(params[:id])
-    end
-
+    
     def edit
-        @user = User.find(params[:id])
+        @user = User.find(current_user.id)
     end
 
     def update
-        @user = User.find(params[:id])
+        @user = User.find(current_user.id)
         @user.update(user_params)
-        redirect_to @user
-    end
-
-    def mypage
-        redirect_to accounts_show_path(current_user)
+        redirect_to users_profile_path
     end
 
     private

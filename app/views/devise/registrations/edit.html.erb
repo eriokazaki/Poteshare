@@ -12,7 +12,7 @@
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-6">
-        <%= form_for @user do |f| %>
+        <%= form_with model: @user, url: users_account_path, local: true do |f| %>
           <div class="field">
             <%= f.label :email, "メールアドレス", class: "label" %>
             <%= f.email_field :email, :placeholder => "メールアドレスを入力してください", class: "input" %>
@@ -33,7 +33,7 @@
             <%= f.password_field :password, autocomplete: "now-password", :placeholder => "現在のパスワードを入力", class: "input" %>
           </div>
           
-          <%= link_to "キャンセル", @user, class: "button" %>
+          <%= link_to "キャンセル", :back, class: "button" %>
           <%= f.submit "保存", class: "button is-success" %>
         <% end %>
       </div>
