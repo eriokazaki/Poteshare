@@ -12,7 +12,7 @@
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-6">
-        <%= form_with model: @user, url: users_account_path, local: true do |f| %>
+       <%= form_with model: @user, scope: 'hoge', url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
           <div class="field">
             <%= f.label :email, "メールアドレス", class: "label" %>
             <%= f.email_field :email, :placeholder => "メールアドレスを入力してください", class: "input" %>

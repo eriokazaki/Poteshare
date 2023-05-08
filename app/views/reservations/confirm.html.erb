@@ -1,0 +1,35 @@
+<h1>予約内容の確認</h1>
+
+ <table class="show-table">
+   <tr>
+     <th>チェックイン</th>
+     <td><%= @reservation.start_date.to_s(:datetime_jp) %></td>
+   </tr>
+   <tr>
+     <th>チェックアウト</th>
+     <td><%=@reservation.end_date.to_s(:datetime_jp) %></td>
+   </tr>
+   <tr>
+     <th>人数</th>
+     <td><%= @reservation.total_people %></td>
+   </tr>
+   <tr>
+     <th>宿泊日数</th>
+     <td><%= @reservation.total_day %></td>
+   </tr>
+   <tr>
+     <th>お支払い金額</th>
+     <td><%= @reservation.total_fee %></td>
+   </tr>
+ </table>
+
+<%=link_to '戻る', :back%>
+<%= form_with model: @reservation, local: true do |f| %>
+	<%= f.hidden_field :start_date %>
+	<%= f.hidden_field :end_date %>
+	<%= f.hidden_field :total_people %>
+    <%= f.hidden_field :user_id, value: @user.id %>
+    <%= f.hidden_field :room_id, value: @room.id%>
+	<%= f.submit '送信する' %>
+<% end %>
+<%= render "shared/footer"%>

@@ -1,0 +1,14 @@
+<h1>予約フォーム</h1>
+<%= form_with model:@reservation, local: true, url: confirm_reservation_path do |f| %>
+	
+	<dl>
+		<dt>チェックイン</dt>
+		<dd><%= f.date_field :start_date %></dd>
+		<dt>チェックアウト</dt>
+		<dd><%= f.date_field :end_date %></dd>
+		<dt>人数</dt>
+		<dd><%= f.number_field :total_people %></dd>
+	</dl>
+
+	<%= f.submit '確認画面へ' %>
+<% end %>

@@ -16,7 +16,7 @@ class UsersController < ApplicationController
         redirect_to "users_profile_path"
     end
     
-    def edit
+    def profile_edit
         @user = User.find(current_user.id)
     end
 
@@ -26,6 +26,13 @@ class UsersController < ApplicationController
         redirect_to users_profile_path
     end
 
+    def destroy
+        @user = User.find(params[:id])
+        @user.destroy
+        flash[:notice] = "ログアウトしました"
+        redirect_to home/index
+      end
+   
     private
     def user_params
         params.require(:user).permit(:username, :email, :profile, :avatar)
