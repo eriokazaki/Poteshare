@@ -7,4 +7,10 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :rooms, dependent: :destroy
   has_many :reservations, dependent: :destroy
+
+  validates :username, presence: true, length: { maximum: 20 }
+  validates :profile, length: { maximum: 500 }
+
+
+
 end

@@ -1,37 +1,53 @@
-<h1>登録済み一覧</h1>
-<% @rooms.each do |room| %>
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+       登録済み一覧
+      </h1>
+    </div>
+  </div>
+</section>
 
- <table class="show-table">
-   </tr>
-     <th>画像</th>
-      <% if @room.image_name.attached?%>
-        <td><%= image_tag room.image.to_s %></td>
-      <% else %>
-        <td><%= image_tag 'default-room.png' %></td>
-      <%end%>
-   </tr>
-   <tr>
-     <th>施設名</th>
-     <td><%=link_to room.name, room_path(room.id) %></td>
-   </tr>
-   <tr>
-     <th>施設紹介</th>
-     <td><%= room.content %></td>
-   </tr>
-   <tr>
-     <th>宿泊料金</th>
-     <td><%= room.fee %></td>
-    <tr>
-     <th>作成日</th>
-     <td><%= room.created_at.to_s(:datetime_jp) %></td>
-   </tr>
-    <tr>
-     <th>編集</th>
-     <td><%= link_to '編集', edit_room_path(room.id) %> </td>
-   </tr>
-   <tr>
-     <th>削除</th>
-     <td><%= link_to '削除', room, method: :delete, data:{ confirm: "本当に削除しますか？"} %> </td>
-   </tr>
- </table>
-<% end %>
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <% @rooms.each do |room| %>
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+        
+              <% if room.image.attached? %>
+              <figure class="image is-4by3">
+                <%= image_tag room.image %>
+              </figure>
+              <% else %> 
+              <figure class="image is-4by3">
+                <%= image_tag "default-room.png" %>
+                </figure>
+              <% end %>
+              
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <%= room.introduce %>
+                </div>
+                <div class="media-content">
+                  <%= room.created_at.to_s(:datetime_jp) %>
+                </div>
+              </div>
+              <div class="content">
+                <price>¥<%= room.single_rate %>〜</price>
+              </div>
+              <%= link_to "編集", edit_room_path(room.id), class: "button is-success" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+
+
+

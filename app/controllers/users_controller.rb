@@ -20,19 +20,19 @@ class UsersController < ApplicationController
         @user = User.find(current_user.id)
     end
 
-    def update
+    def profile_update
+        binding.pry
         @user = User.find(current_user.id)
-        @user.update(user_params)
-        redirect_to users_profile_path
+        if @user.update!(user_params)
+            flash[:notice] = "プロフィールの情報を更新しました"
+            redirect_to "users_profile_path"
+          else
+            flash.now[:alert] ="プロフィールの情報を更新できませんでした"
+            render "users_profile_edit_path"
+          end
     end
 
-    def destroy
-        @user = User.find(params[:id])
-        @user.destroy
-        flash[:notice] = "ログアウトしました"
-        redirect_to home/index
-      end
-   
+
     private
     def user_params
         params.require(:user).permit(:username, :email, :profile, :avatar)
