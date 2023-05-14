@@ -2,38 +2,55 @@
   <div class="hero-body">
     <div class="container">
       <h1 class="title">
-        宿泊施設一覧
+       登録済み施設一覧
       </h1>
     </div>
   </div>
 </section>
 
 <section class="section">
-  <div class="container">
-    <div class="columns is-multiline">
-      <% @rooms.each do |room| %>
-        <div class="column is-4">
-          <div class="card">
-            <div class="card-image">
-                <%= image_tag @room.image %>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <%= room.address %>
-                </div>
-                <div class="media-content">
-                  <%= room.introduce %>
-                </div>
-              </div>
-              <div class="content">
-                <price>¥<%= room.single_rate %>〜</price>
-              </div>
-              <%= link_to "詳細はこちら", room_path(room), class: "button is-success" %>
-            </div>
-          </div>
+<table>
+<thead>
+  <tr>
+    <th>画像</th>
+    <th>施設名</th>
+    <th>施設紹介</th>
+    <th>料金</th>
+    <th>作成日</th>
+    <th>編集</th>
+    <th>削除</th>
+  </tr>
+</thead>
+<tbody>
+  <% @rooms.each do |room| %>
+    <tr>
+      <td>
+        <div>
+        <% if room.image.attached? %>
+        <% binding pry %>
+          <%= image_tag  @room.image.url %>
+        <% else %>
+          <%= image_tag 'default-room.png' %>
+        <% end %>
         </div>
-      <% end %>
-    </div>
-  </div>
+      </td>                    
+      <td><%= link_to room.name, room_path(room) %></td>
+      <td><%= room.introduce %></td>
+      <td>¥<%= room.single_rate %>〜</td>
+      <td><%= room.updated_at&.strftime("%Y/%m/%d") %></td>
+      <td><%= link_to "詳細" , room_path(room) %></td>
+      <td><%= link_to "編集" , edit_room_path(room) %></td>
+      <td><%= button_to "削除" , room_path(room), method: :delete , data: { confirm: "本当に削除しますか？" }%></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+
+<div class= "newroom">
+  <%= link_to "新しい部屋の登録" , new_room_path, class: "button is-success" %>
+</div>
 </section>
+
+
+
+

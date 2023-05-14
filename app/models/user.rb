@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
 
   validates :username, presence: true, length: { maximum: 20 }
-  validates :profile, length: { maximum: 500 }
+  validates :profile, length: { maximum: 200 }
 
 
 

@@ -1,59 +1,75 @@
 class ReservationsController < ApplicationController
-    def confirm
-      @reservation = Reservation.new(params.permit(:start_date, :end_date, :total_people, :room_id, :user_id))
-      
-      @room = Room.find(params[:room_id])
-      @user = User.find(current_user.id)
-      @user_id = current_user.id
-  
-      @reservation.total_day = @reservation&.sum_of_days
-      @reservation.total_fee = @reservation&.sum_of_price
+  before_action :authenticate_user!
+
+  def index
+    @user = current_user
+    @reservations = current_user.reservations
+  end
+
+  def new
+    @user = current_user
+    @reservation = Reservation.new
+  end
+
+  def confirm
+    @reservation = Reservation.new(reservation_params)
+    @user = current_user
+    @room = Room.find(params[:reservation][:room_id])
+    if @reservation.start_date. == nil
+      redirect_to @room, alert: "開始日を入力してください" and return
+    end 
+    if @reservation.end_date == nil
+      redirect_to @room, alert:"終了日を入力してください" and return
     end
-  
-    def create
-      @reservation = Reservation.new(params.require(:reservation).permit(:start_date, :end_date, :total_people, :total_day, :total_fee, :room_id, :user_id))
-      @room = @reservation.room
-      @reservation.total_fee = @reservation.sum_of_price
-      @user = User.find(current_user.id)
-      @user_id = current_user.id
-  
-      if @reservation.save
-        flash[:success] = "予約しました"
-        redirect_to controller: :reservations, action: :index
-      else
-        render "confirm"
-      end
+    if @reservation.end_date < @reservation.start_date
+      redirect_to @room, alert:"終了日は開始日以降の日付にしてください" and return
     end
-    
-    def index
-      @reservations = current_user.reservations.all
+    if @reservation.number_of_people == nil
+      redirect_to @room, alert:"正しい人数を入力してください" and return
     end
-  
-    def edit
-      @reservation = Reservation.find(params[:id])
-    end
-  
-    def update
-      @reservation = Reservation.find(params[:id])
-  
-      if @reservation.update(reservation_params)
-        flash[:notice] = "保存しました。"
-        redirect_to controller: :reservations, action: :confirm
-      else
-        flash[:alert] = "問題が発生しました。"
-        render "edit"
-      end
-    end
-  
-    def destroy
-      @reservation = Reservation.find(params[:id])
-      @reservation.destroy
-      flash[:notice] = "ユーザーを削除しました"
-      redirect_to controller: :reservations, action: :index
-    end
-  
-    private
-    def reservation_params
-      params.permit(:start_date, :end_date, :total_people, :total_day, :total_fee, :room_id, :user_id)
+    @total_day = (@reservation.end_date - @reservation.start_date).to_i 
+    @total_price = (@total_day * @reservation.number_of_people * @room.single_rate)
+  end
+
+  def create
+    @room = Room.find(params[:reservation][:room_id])
+    @user = User.find_by(params[:reservation][:room_id])
+    @reservation = Reservations.new(params.require(:reservation).permit(:start_date, :end-date, :number_of_people, :user_id, :room_id ,:created_at , :updated_at))
+
+    if @reservation.save
+      flash[:notice] = "予約に成功しました"
+      redirect_to reservations_path (@reservation)
+    else
+      flash.now[:alert] = "予約に失敗しました"
+      render "rooms/show"
     end
   end
+
+  def show
+    @user = current_user
+    @reservations = Reservation.all
+  end
+
+  def edit
+    @room = Room.all
+    @reservation = Reservation.find(params[:id])
+  end
+
+  def update
+  end
+
+  def destroy
+    @reservation = Reservation.find(params[:id])
+    @reservation.destroy
+    flash[:notice] = "予約をキャンセルしました" 
+    redirect_to reservations_path
+  end
+
+  def reservation_params
+    params.require(:reservation).permit(:start_date, :end_date, :number_of_people, :user_id, :room_id , :created_at , :updated_at)
+  end
+
+end
+
+
+   

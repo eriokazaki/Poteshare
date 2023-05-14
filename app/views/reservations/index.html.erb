@@ -1,44 +1,57 @@
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+       予約内容の一覧
+      </h1>
+    </div>
+  </div>
+</section>
 
-
-<h1>予約内容の一覧</h1>
-
-<% @reservations.each do |reservation| %>
- <table class="show-table">
-  </tr>
-     <th>施設画像</th>
-      <% if reservation.room.image?%>
-      <td><%= image_tag reservation.room.image.to_s %></td>
-      <% else %>
-      <td><%= image_tag 'default-room.png' %></td>
-      <%end%>
-   </tr>
-   </tr>
-     <th>施設名</th>
-     <td><%= reservation.room.title %></td>
-   </tr>
-   </tr>
-     <th>紹介文</th>
-     <td><%= reservation.room.content %></td>
-   </tr>
-  </tr>
-     <th>合計料金</th>
-     <td><%= reservation.total_fee %></td>
-   </tr>
-   <tr>
-     <th>チェックイン</th>
-     <td><%= reservation.start_date.to_s(:datetime_jp) %></td>
-   </tr>
-   <tr>
-     <th>チェックアウト</th>
-     <td><%= reservation.end_date.to_s(:datetime_jp) %></td>
-   </tr>
-     <th>予約確定日時</th>
-     <td><%= reservation.created_at.to_s(:datetimeofday_jp) %></td>
-   </tr>
+<% if @reservation == true %>
+  <% @reservations.each do |reservation| %>
+  <table class="show-table">
+    </tr>
+      <th>施設画像</th>
+        <% if reservation.room.image?%>
+        <td><%= image_tag reservation.room.image %></td>
+        <% else %>
+        <td><%= image_tag 'default-room.png' %></td>
+        <% end %>
+    </tr>
+    </tr>
+      <th>施設名</th>
+      <td><%= reservation.room.title %></td>
+    </tr>
+    </tr>
+      <th>紹介文</th>
+      <td><%= reservation.room.content %></td>
+    </tr>
+    </tr>
+      <th>合計料金</th>
+      <td><%= reservation.total_fee %></td>
+    </tr>
     <tr>
-     <th>削除</th>
-     <td><%= link_to '削除', reservation, method: :delete, data:{ confirm: "本当に削除しますか？"} %> </td>
-   </tr>
+      <th>チェックイン</th>
+      <td><%= reservation.start_date.to_s(:datetime_jp) %></td>
+    </tr>
+    <tr>
+      <th>チェックアウト</th>
+      <td><%= reservation.end_date.to_s(:datetime_jp) %></td>
+    </tr>
+      <th>予約確定日時</th>
+      <td><%= reservation.created_at.to_s(:datetimeofday_jp) %></td>
+    </tr>
+      <tr>
+      <th>削除</th>
+      <td><%= link_to '削除', reservation, method: :delete, data:{ confirm: "本当に削除しますか？"} %> </td>
+    </tr>
+    <% end %>
+   <% else %>
+     <td class="has-text-white">
+        現在予約している施設はありません
+     </td>
+  <% end %>
  </table>
- <% end %>
+ 
 

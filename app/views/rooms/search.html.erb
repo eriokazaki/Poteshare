@@ -2,7 +2,7 @@
   <div class="hero-body">
     <div class="container">
       <h1 class="title">
-       登録済み一覧
+        宿泊施設一覧
       </h1>
     </div>
   </div>
@@ -15,31 +15,21 @@
         <div class="column is-4">
           <div class="card">
             <div class="card-image">
-        
-              <% if room.image.attached? %>
-              <figure class="image is-4by3">
-                <%= image_tag room.image %>
-              </figure>
-              <% else %> 
-              <figure class="image is-4by3">
-                <%= image_tag "default-room.png" %>
-                </figure>
-              <% end %>
-              
+            <%= image_tag room.image %>
             </div>
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
-                  <%= room.introduce %>
+                  <%= room.address %>
                 </div>
                 <div class="media-content">
-                  <%= room.created_at.to_s(:datetime_jp) %>
+                  <%= room.introduce %>
                 </div>
               </div>
               <div class="content">
                 <price>¥<%= room.single_rate %>〜</price>
               </div>
-              <%= link_to "編集", edit_room_path(room.id), class: "button is-success" %>
+              <%= link_to "詳細はこちら", room_path(room), class: "button is-success" %>
             </div>
           </div>
         </div>
@@ -47,7 +37,3 @@
     </div>
   </div>
 </section>
-
-
-
-

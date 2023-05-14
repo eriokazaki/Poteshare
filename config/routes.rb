@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'users/profile'
   patch 'users/profile'
   post 'users/profile_edit', to: 'users#profile_update'
-
+  get 'home/show'
   # get 'users/profile/edit', to: 'users#profile_edit'
   # post 'users/profile/edit', to: 'users#profile_edit'
   # patch 'users/profile/edit', to: 'users#profile_update'
@@ -41,5 +41,6 @@ Rails.application.routes.draw do
   get 'users/edit', to: 'users/registrations#edit'
   get 'users/profile_edit', to: 'users#profile_edit'
   
-  
+  post 'users/:id/edit' => 'users#profile'
+  post 'reservations/:id' => 'reservations#index'
 end
